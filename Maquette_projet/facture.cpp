@@ -1,4 +1,6 @@
 #include "facture.h"
+#include<QSqlQuery>
+#include<QDebug>
 
 Facture::Facture()
 {
@@ -13,8 +15,9 @@ prix_uni=0;
 quantite=0;
 montant=0;
 mail="";
+type=0;
 }
-Facture::Facture(int id_facture,int id_client,QString nom,QString prenom,int cin,QString date,QString des,float prix_uni,int quantite,float montant,QString mail)
+Facture::Facture(int id_facture,int id_client,QString nom,QString prenom,int cin,QString date,QString des,float prix_uni,int quantite,float montant,QString mail,int type)
 {
     this->id_facture=id_facture;
     this->id_client=id_client;
@@ -27,6 +30,7 @@ Facture::Facture(int id_facture,int id_client,QString nom,QString prenom,int cin
     this->quantite=quantite;
     this->montant=montant;
     this->mail=mail;
+    this->type=type;
 
 }
 int Facture::getid_facture(){return id_facture;}
@@ -51,3 +55,24 @@ void Facture::setprix_uni(float prix_uni){this->prix_uni=prix_uni;}
 void Facture::setquantite(int quantite){this->quantite=quantite;}
 void Facture::setmontant(float montant){this->montant=montant;}
 void Facture::setmail(QString mail){this->mail=mail;}
+void Facture::settype(int type){this->type=type;}
+bool Facture::ajouter(){
+
+    bool test=false;
+    QSqlQuery query;
+    QString id_facture_string=QString::number(id_facture);
+    QString id_client_string=QString::number(id_client);
+    query.prepare("INSERT INTO Facture (id_facture,id_client,nom,prenom) "
+                        "VALUES (:id, :forename, :surname)");
+          query.bindValue(":id_facture", id_facture_string);
+          query.bindValue(":id_client", id_client_string)
+          query.bindValue(":nom", nom);
+          query.bindValue(":prenom", prenom);
+          query.exec();
+
+
+
+
+    return test;
+}
+

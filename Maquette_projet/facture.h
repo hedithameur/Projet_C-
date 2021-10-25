@@ -6,7 +6,7 @@ class Facture
 {
 public:
     Facture();
-    Facture(int,int,QString,QString,int,QString,QString,float,int,float,QString);
+    Facture(int,int,QString,QString,int,QString,QString,float,int,float,QString,int);
     int getid_facture();
     int getid_client();
     QString getnom();
@@ -18,6 +18,7 @@ public:
     int getquantite();
     float getmontant();
     QString getmail();
+    int gettype();
     void setid_facture(int);
     void setid_client(int);
     void setnom(QString);
@@ -29,9 +30,12 @@ public:
     void setquantite(int);
     void setmontant(float);
     void setmail(QString);
+    void settype(int);
+    bool ajouter();
+
 
 private:
-   int id_facture,id_client,cin,quantite;
+   int id_facture,id_client,cin,quantite,type;  /*1 si achat, 2 si vente*/
    float prix_uni,montant;
    QString date,des,mail,nom,prenom;
 

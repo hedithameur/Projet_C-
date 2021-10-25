@@ -32,7 +32,7 @@
      </font>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -116,7 +116,7 @@
        <string>Prix unitaire</string>
       </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit">
+     <widget class="QLineEdit" name="le_id_facture">
       <property name="geometry">
        <rect>
         <x>160</x>
@@ -126,7 +126,7 @@
        </rect>
       </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit_2">
+     <widget class="QLineEdit" name="le_id_client">
       <property name="geometry">
        <rect>
         <x>160</x>
@@ -136,7 +136,7 @@
        </rect>
       </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit_3">
+     <widget class="QLineEdit" name="la_date">
       <property name="geometry">
        <rect>
         <x>160</x>
@@ -146,7 +146,7 @@
        </rect>
       </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit_4">
+     <widget class="QLineEdit" name="la_des">
       <property name="geometry">
        <rect>
         <x>500</x>
@@ -156,7 +156,7 @@
        </rect>
       </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit_6">
+     <widget class="QLineEdit" name="le_prix_uni">
       <property name="geometry">
        <rect>
         <x>500</x>
@@ -192,7 +192,7 @@
        <string>Montant </string>
       </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit_7">
+     <widget class="QLineEdit" name="le_montant">
       <property name="geometry">
        <rect>
         <x>500</x>
@@ -205,7 +205,7 @@
        <string>               DT,</string>
       </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit_8">
+     <widget class="QLineEdit" name="le_mail">
       <property name="geometry">
        <rect>
         <x>500</x>
@@ -254,7 +254,7 @@
        <string>CIN</string>
       </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit_9">
+     <widget class="QLineEdit" name="le_nom">
       <property name="geometry">
        <rect>
         <x>160</x>
@@ -264,7 +264,7 @@
        </rect>
       </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit_10">
+     <widget class="QLineEdit" name="le_prenom">
       <property name="geometry">
        <rect>
         <x>160</x>
@@ -274,7 +274,7 @@
        </rect>
       </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit_11">
+     <widget class="QLineEdit" name="le_cin">
       <property name="geometry">
        <rect>
         <x>160</x>
@@ -284,7 +284,7 @@
        </rect>
       </property>
      </widget>
-     <widget class="QSpinBox" name="spinBox">
+     <widget class="QSpinBox" name="la_quantite">
       <property name="geometry">
        <rect>
         <x>520</x>
@@ -294,17 +294,40 @@
        </rect>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton">
+     <widget class="QPushButton" name="bp_ajouter">
       <property name="geometry">
        <rect>
-        <x>640</x>
-        <y>310</y>
+        <x>680</x>
+        <y>330</y>
         <width>93</width>
         <height>28</height>
        </rect>
       </property>
       <property name="text">
        <string>Ajouter</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_19">
+      <property name="geometry">
+       <rect>
+        <x>360</x>
+        <y>290</y>
+        <width>121</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Type ( vente/achat)</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="le_type">
+      <property name="geometry">
+       <rect>
+        <x>500</x>
+        <y>290</y>
+        <width>141</width>
+        <height>22</height>
+       </rect>
       </property>
      </widget>
     </widget>
@@ -404,9 +427,52 @@
         </column>
         <column>
          <property name="text">
+          <string>Type</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
           <string/>
          </property>
         </column>
+       </widget>
+       <widget class="QLabel" name="label_18">
+        <property name="geometry">
+         <rect>
+          <x>445</x>
+          <y>20</y>
+          <width>81</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Trier selon</string>
+        </property>
+       </widget>
+       <widget class="QComboBox" name="comboBox_2">
+        <property name="geometry">
+         <rect>
+          <x>520</x>
+          <y>20</y>
+          <width>73</width>
+          <height>22</height>
+         </rect>
+        </property>
+        <item>
+         <property name="text">
+          <string>Date</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Montant</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Prix_unitaire</string>
+         </property>
+        </item>
        </widget>
       </widget>
       <widget class="QWidget" name="page_2">
@@ -450,6 +516,16 @@
         <item>
          <property name="text">
           <string>Prénom</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Achat</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Vente</string>
          </property>
         </item>
        </widget>
