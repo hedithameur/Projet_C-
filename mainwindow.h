@@ -32,6 +32,10 @@ private slots:
     void on_pb_imprimer_clicked();
 
     void on_pb_browse_clicked();
+    void stat();
+    void on_pushButton_2_clicked();
+
+    void on_pushButton_clicked();
 
 private:
     Ui::MainWindow *ui;

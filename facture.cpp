@@ -107,21 +107,11 @@ bool Facture::supprimer(int id_facture){
 
 bool Facture::recherche_id_facture(int id)
     {
-        QMessageBox msgBox;
         QSqlQuery query;
-
-        query.prepare("SELECT * FROM facture_2 WHERE id= :id_facture");
-        query.bindValue(":id_facture", id);
-        if (query.exec() && query.next())
-        {
-                return true;
-        }
-        else
-        {
-            msgBox.setText("produit inexistant");
-            msgBox.exec();
-            return false;
-        }
+   QString id_string=QString::number(id);
+        query.prepare("SELECT * FROM facture_2 WHERE id_facture= :id");
+        query.bindValue(":id", id_string);
+      return  query.exec();
     }
 
 QSqlQueryModel* Facture::afficher_recherche_id(int id)
@@ -129,7 +119,7 @@ QSqlQueryModel* Facture::afficher_recherche_id(int id)
        QSqlQueryModel* model= new QSqlQueryModel();
        QString id_string=QString::number(id);
 
-             model->setQuery("SELECT * FROM facture_2 WHERE id_facture='"+id_string+"'");
+             model->setQuery("SELECT * FROM facture_2 WHERE id_facture="+id_string+";");
 
        return model;
    }
@@ -161,5 +151,7 @@ QSqlQueryModel* Facture::afficher_recherche_date(QString date)
 
        return model;
    }
+bool Facture::modifier(){
 
+}
 

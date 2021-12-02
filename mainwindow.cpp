@@ -6,6 +6,7 @@
 #include <QtPrintSupport/QPrintDialog>
 #include <QFile>
 #include <QFileDialog>
+#include<qsqlquery.h>
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -14,7 +15,8 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     ui->tab_facture->setModel(F.afficher());
-
+stat();
+ui->pushButton->setDisabled(true);
 }
 
 MainWindow::~MainWindow()
@@ -34,6 +36,7 @@ void MainWindow::on_le_pb_supprimer_clicked()
                      QObject::tr("Suppression effectuée\n"
                              "Click Cancel to exit,"), QMessageBox::Cancel);
             ui->tab_facture->setModel(F.afficher());
+            stat();
 
         }
 
@@ -61,7 +64,7 @@ void MainWindow::on_bp_ajouter_clicked()
                  QObject::tr("Ajout effectué\n"
                          "Click Cancel to exit,"), QMessageBox::Cancel);
         ui->tab_facture->setModel(F.afficher());
-
+stat();
     }
 
     else QMessageBox::critical(nullptr, QObject::tr("Not OK"),
@@ -176,3 +179,63 @@ void MainWindow::on_pb_browse_clicked()
 
         ui->contenu->setText( fileListString );
 }
+void MainWindow::stat(){
+ui->fsa->setValue(0);
+ui->fsv->setValue(0);
+QSqlQuery q;
+q.prepare("Select type,round(sum(montant)/(select sum(montant) as s from facture_2)*100) from facture_2 group by type order by type;");
+if(q.exec()){
+q.next();
+ui->fsa->setValue(q.value(1).toInt());
+q.next();
+ui->fsv->setValue(q.value(1).toInt());
+}
+}
+
+void MainWindow::on_pushButton_2_clicked()
+{
+QString id= ui->le_id_facture_mod->text();
+QSqlQuery q;
+q.prepare("select des,type,montant,quantite from facture_2 where ID_facture="+id+";");
+if(q.exec()){
+    ui->la_des_mod->setText("");
+        ui->le_type_mod->setText("");
+        ui->le_mo_mod->setText("");
+        ui->le_quan_mod->setText("");
+        ui->pushButton->setDisabled(true);
+        ui->label_51->setText("Not Found");
+  while( q.next())
+{
+    ui->la_des_mod->setText(q.value(0).toString());
+    ui->le_type_mod->setText(q.value(1).toString());
+    ui->le_mo_mod->setText(q.value(2).toString());
+    ui->le_quan_mod->setText(q.value(3).toString());
+    ui->pushButton->setDisabled(false);
+     ui->label_51->setText(id);
+}
+}
+}
+
+void MainWindow::on_pushButton_clicked()
+{
+ QString des=   ui->la_des_mod->text();
+  QString type=   ui->le_type_mod->text();
+   QString mo=  ui->le_mo_mod->text();
+ QString quan=    ui->le_quan_mod->text();
+ QString id=    ui->label_51->text();
+    QSqlQuery q;
+if (q.exec("UPDATE facture_2 SET des='"+ des+"',type ='"+type+"',montant='"+mo+"',quantite='"+quan+"' where ID_facture="+id+";"))
+{
+    QMessageBox::information(nullptr,QObject::tr("OK"),
+             QObject::tr("mise a jour effectué\n"
+                     "Click Cancel to exit,"), QMessageBox::Cancel);
+    ui->tab_facture->setModel(F.afficher());
+stat();
+}
+
+else QMessageBox::critical(nullptr, QObject::tr("Not OK"),
+          QObject::tr("mise à jour non effectué.\n"
+                      "Click Cancel to exit."), QMessageBox::Cancel);
+
+}
+
