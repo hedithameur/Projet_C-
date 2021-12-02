@@ -9,6 +9,7 @@
 #include <QChartView>
 #include <QBarSet>
 #include <QBarSeries>
+#include <arduino.h>
 
 
 QT_BEGIN_NAMESPACE
@@ -46,6 +47,18 @@ private slots:
 
     void on_gestion_des_personnel_currentChanged(int index);
 
+    void update_label();   // slot permettant la mise Ã  jour du label Ã©tat de la lampe 1,
+        // ce slot est lancÃ© Ã  chaque rÃ©ception d'un message de Arduino
+
+
+    void on_ON_clicked();
+
+    void on_OFF_clicked();
+
+    void on_plus_clicked();
+
+    void on_moins_clicked();
+
 private:
     Ui::MainWindow *ui;
     Personnel P;
@@ -53,5 +66,8 @@ private:
     tache T;
     int grand;
     int petit;
+    QByteArray data; // variable contenant les donnÃ©es reÃ§ues
+    Arduino A; // objet temporaire
+
 };
 #endif // MAINWINDOW_H
