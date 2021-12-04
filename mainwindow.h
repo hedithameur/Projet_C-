@@ -37,6 +37,8 @@ private slots:
 
     void on_pushButton_clicked();
 
+    void on_pb_mailing_clicked();
+
 private:
     Ui::MainWindow *ui;
     Facture F;

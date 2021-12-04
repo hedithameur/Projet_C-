@@ -7,6 +7,8 @@
 #include <QFile>
 #include <QFileDialog>
 #include<qsqlquery.h>
+#include <QDesktopServices>
+#include <QUrl>
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -48,15 +50,14 @@ void MainWindow::on_le_pb_supprimer_clicked()
 void MainWindow::on_bp_ajouter_clicked()
 {
     int id_facture=ui->le_id_facture->text().toInt();
-   // int id_client=ui->le_id_client->text().toInt();
+    int id_client=ui->le_id_client->text().toInt();
     QString date_facture=ui->la_date->text();
     QString des=ui->la_des->text();
     float prix_uni=ui->le_prix_uni->text().toFloat();
-   // int quantite=ui->la_quantite->text().toInt();
-   // float montant=ui->le_montant->text().toFloat();
-   // QString mail_facture=ui->le_mail->text();
+    int quantite=ui->la_quantite->text().toInt();
+    float montant=ui->le_montant->text().toFloat();
     int type=ui->le_type->text().toInt();
-    Facture F(id_facture,des,type,date_facture,prix_uni);//,id_client,date,des,prix_uni,quantite,montant,mail_facture,type);
+    Facture F(id_facture,id_client,des,date_facture,prix_uni,quantite,montant,type);
     bool test=F.ajouter();
     if (test)
     {
@@ -77,9 +78,13 @@ void MainWindow::on_pb_Tri_date_clicked()
 
     QSqlQueryModel *model = new QSqlQueryModel();
              model->setQuery("SELECT * FROM facture_2 order by date_facture ASC");
-             model->setHeaderData(0, Qt::Horizontal, QObject::tr("id"));
-             model->setHeaderData(1, Qt::Horizontal, QObject::tr("désignation"));
-             model->setHeaderData(2, Qt::Horizontal, QObject::tr("date"));
+             model->setHeaderData(0, Qt::Horizontal, QObject::tr("id_facture"));
+             model->setHeaderData(1, Qt::Horizontal, QObject::tr("id_client"));
+             model->setHeaderData(2, Qt::Horizontal, QObject::tr("désignation"));
+             model->setHeaderData(3, Qt::Horizontal, QObject::tr("date"));
+             model->setHeaderData(4, Qt::Horizontal, QObject::tr("prix_unitaire"));
+             model->setHeaderData(5, Qt::Horizontal, QObject::tr("quantité"));
+             model->setHeaderData(6, Qt::Horizontal, QObject::tr("montant"));
              model->setHeaderData(3, Qt::Horizontal, QObject::tr("type"));
 
 
@@ -95,9 +100,13 @@ void MainWindow::on_pb_tri_id_clicked()
 
       QSqlQueryModel *model = new QSqlQueryModel();
                model->setQuery("SELECT * FROM facture_2 order by id_facture ASC");
-               model->setHeaderData(0, Qt::Horizontal, QObject::tr("id"));
-               model->setHeaderData(1, Qt::Horizontal, QObject::tr("désignation"));
-               model->setHeaderData(2, Qt::Horizontal, QObject::tr("date"));
+               model->setHeaderData(0, Qt::Horizontal, QObject::tr("id_facture"));
+               model->setHeaderData(1, Qt::Horizontal, QObject::tr("id_client"));
+               model->setHeaderData(2, Qt::Horizontal, QObject::tr("désignation"));
+               model->setHeaderData(3, Qt::Horizontal, QObject::tr("date"));
+               model->setHeaderData(4, Qt::Horizontal, QObject::tr("prix_unitaire"));
+               model->setHeaderData(5, Qt::Horizontal, QObject::tr("quantité"));
+               model->setHeaderData(6, Qt::Horizontal, QObject::tr("montant"));
                model->setHeaderData(3, Qt::Horizontal, QObject::tr("type"));
 
                ui->tab_facture->setModel(model);
@@ -112,9 +121,13 @@ void MainWindow::on_pb_tri_prix_clicked()
 
         QSqlQueryModel *model = new QSqlQueryModel();
                  model->setQuery("SELECT * FROM facture_2 order by prix_unitaire ASC");
-                 model->setHeaderData(0, Qt::Horizontal, QObject::tr("id"));
-                 model->setHeaderData(1, Qt::Horizontal, QObject::tr("désignation"));
-                 model->setHeaderData(2, Qt::Horizontal, QObject::tr("date"));
+                 model->setHeaderData(0, Qt::Horizontal, QObject::tr("id_facture"));
+                 model->setHeaderData(1, Qt::Horizontal, QObject::tr("id_client"));
+                 model->setHeaderData(2, Qt::Horizontal, QObject::tr("désignation"));
+                 model->setHeaderData(3, Qt::Horizontal, QObject::tr("date"));
+                 model->setHeaderData(4, Qt::Horizontal, QObject::tr("prix_unitaire"));
+                 model->setHeaderData(5, Qt::Horizontal, QObject::tr("quantité"));
+                 model->setHeaderData(6, Qt::Horizontal, QObject::tr("montant"));
                  model->setHeaderData(3, Qt::Horizontal, QObject::tr("type"));
 
 
@@ -234,8 +247,14 @@ stat();
 }
 
 else QMessageBox::critical(nullptr, QObject::tr("Not OK"),
-          QObject::tr("mise à jour non effectué.\n"
+          QObject::tr("mise à  non effectué.\n"
                       "Click Cancel to exit."), QMessageBox::Cancel);
 
 }
 
+
+void MainWindow::on_pb_mailing_clicked()
+{
+    QString link="https://mail.google.com/mail/u/0/#inbox?compose=new";
+        QDesktopServices::openUrl(link);
+}
